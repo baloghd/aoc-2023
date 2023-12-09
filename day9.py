@@ -3,6 +3,7 @@ from collections import defaultdict
 from functools import reduce
 from itertools import pairwise
 from pathlib import Path
+from time import perf_counter
 
 
 def make_sequence(line):
@@ -36,16 +37,16 @@ def second(input):
         expands = expand_until_zeros(seq)
         #print(expands)
         last_numbers.append([x[0] for x in expands[::-1]])
-    print(last_numbers)
+    #print(last_numbers)
     
     sums = 0
     for last in last_numbers:
-        extr = reduce(lambda x, y: y - x, last)
-        sums += extr
+        sums += reduce(lambda x, y: y - x, last)
     print(sums)
     
             
 if __name__ == "__main__":
+    start = perf_counter()
     data = Path("day9.input").read_text().strip()
     
     example = """
@@ -64,3 +65,5 @@ if __name__ == "__main__":
     #first(data)
      #second(example_2)
     second(data)
+    end = perf_counter()
+    print(f"{(end - start)*1000} ms")
